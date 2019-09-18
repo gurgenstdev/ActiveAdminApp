@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_17_114701) do
+ActiveRecord::Schema.define(version: 2019_09_18_130939) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
@@ -38,6 +38,21 @@ ActiveRecord::Schema.define(version: 2019_09_17_114701) do
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
   end
 
+  create_table "network_users", force: :cascade do |t|
+    t.integer "network_id", null: false
+    t.integer "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["network_id"], name: "index_network_users_on_network_id"
+    t.index ["user_id"], name: "index_network_users_on_user_id"
+  end
+
+  create_table "networks", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "first_name"
     t.string "email"
@@ -46,4 +61,6 @@ ActiveRecord::Schema.define(version: 2019_09_17_114701) do
     t.string "last_name"
   end
 
+  add_foreign_key "network_users", "networks"
+  add_foreign_key "network_users", "users"
 end

@@ -9,7 +9,6 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
-g
 class User < ApplicationRecord
   validates :first_name, presence: :true
   validates :last_name, presence: :true

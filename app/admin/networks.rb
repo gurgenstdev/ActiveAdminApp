@@ -1,5 +1,6 @@
 ActiveAdmin.register Network do
   permit_params :name, user_ids: []
+  csv_importable :columns => [:name], :import_unique_key => :name
 
   index do
     selectable_column
@@ -9,7 +10,7 @@ ActiveAdmin.register Network do
       table_for network.users.order('email ASC') do
         column do |user|
           user
-        end
+       end
       end
     end
     actions
@@ -29,7 +30,7 @@ ActiveAdmin.register Network do
   form title: "Adding New Networks" do |f|
     inputs "Network Details " do
       input :name
-      f.input :email, :as => :check_boxes, collection: User.all
+      f.input :users, :as => :check_boxes
     end
     actions
   end

@@ -11,6 +11,6 @@
 class Network < ApplicationRecord
   validates :name, presence: true
 
-  has_many :network_users
+  has_many :network_users, dependent: :delete_all
   has_many :users, through: :network_users
 end

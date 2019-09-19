@@ -59,3 +59,4 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'activeadmin'
 gem 'active_admin_csv_import'
 gem 'devise'
+gem "haml-rails", "~> 2.0"

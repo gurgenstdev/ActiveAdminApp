@@ -1,11 +1,6 @@
 ActiveAdmin.register User do
-  # TODO
-  # add network with many-to-many relationship with user +
-  # add networks with form and csv
-  # add primary network to user
-  # fix user's emails part when adding users to the network
-
-  permit_params :email, :first_name, :last_name, network_ids: []
+  permit_params :email, :first_name, :last_name, network_ids: [],
+                network_attributes: [:id, :name]
   csv_importable :columns => [:first_name, :last_name, :email], :import_unique_key => :email
 
 
@@ -43,7 +38,7 @@ ActiveAdmin.register User do
       input :email
       input :first_name
       input :last_name
-      f.input :networks, :as => :check_boxes
+      f.input :networks, :as => :check_boxes, colleaction: User.all.map{|u| [u.email, u.id]}
     end
     actions
   end

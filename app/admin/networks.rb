@@ -1,5 +1,6 @@
 ActiveAdmin.register Network do
-  permit_params :name, user_ids: []
+  permit_params :name, user_ids: [],
+                user_attributes: [:id, :email, :first_name, :last_name]
   csv_importable :columns => [:name], :import_unique_key => :name
 
   index do
@@ -30,7 +31,7 @@ ActiveAdmin.register Network do
   form title: "Adding New Networks" do |f|
     inputs "Network Details " do
       input :name
-      f.input :users, :as => :check_boxes
+      input :users, as: :check_boxes, collection: User.all.map{|u| [u.email, u.id]}
     end
     actions
   end

@@ -11,6 +11,8 @@
 class Network < ApplicationRecord
   validates :name, presence: true
 
+  #belongs_to :primary_network
+  #has_many :primary_users, :class_name => 'User', :foreign_key => :primary_network_id
   has_many :network_users, dependent: :delete_all
   has_many :users, through: :network_users
 end

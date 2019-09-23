@@ -1,5 +1,5 @@
 ActiveAdmin.register User do
-  permit_params :email, :first_name, :last_name, :primary_network, network_ids: [],
+  permit_params :email, :first_name, :last_name, :primary_network_id, network_ids: [],
                 network_attributes: [:id, :name]
   csv_importable :columns => [:first_name, :last_name, :email], :import_unique_key => :email
 
@@ -40,7 +40,7 @@ ActiveAdmin.register User do
       input :email
       input :first_name
       input :last_name
-      input :primary_network, :as => :select, collection: Network.all.map{|nt| [nt.name, nt.name]}
+      input :primary_network_id, :as => :select, collection: Network.all.map{|nt| [nt.name, nt.id]}
       f.input :networks, :as => :check_boxes, colleaction: User.all.map{|u| [u.email, u.id]}
     end
     actions

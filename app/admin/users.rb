@@ -41,8 +41,14 @@ ActiveAdmin.register User do
       input :first_name
       input :last_name
       input :primary_network_id, :as => :select, collection: Network.all.map{|nt| [nt.name, nt.id]}
-      f.input :networks, :as => :check_boxes, colleaction: User.all.map{|u| [u.email, u.id]}
+      f.input :networks, :as => :check_boxes, collection: Network.all.map{|u| [u.name, u.id]}
     end
     actions
   end
+
+  filter :id, as: :numeric, label: "User ID"
+  filter :email
+  filter :first_name
+  filter :last_name
+  filter :networks, collection: Network.all.map{|u| [u.name]}
 end

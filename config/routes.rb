@@ -1,6 +1,12 @@
 Rails.application.routes.draw do
-  resources :users
+  default_url_options :host => "localhost:3000"
+
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  devise_for :users , controllers: {
+      sessions: 'users/sessions',
+      confirmations: 'users/confirmations',
+  }
+
+  resources :users
 end

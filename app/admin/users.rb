@@ -40,8 +40,8 @@ ActiveAdmin.register User do
       input :email
       input :first_name
       input :last_name
-      input :password
-      input :password_confirmation
+      #input :password
+      #input :password_confirmation
       input :primary_network_id, :as => :select, collection: Network.all.map{|nt| [nt.name, nt.id]}
       f.input :networks, :as => :check_boxes, collection: Network.all.map{|u| [u.name, u.id]}
     end

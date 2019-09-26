@@ -29,7 +29,7 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+         :recoverable, :rememberable, :validatable, :confirmable
 
 
   validates :first_name, presence: :true
@@ -41,6 +41,11 @@ class User < ApplicationRecord
   has_many :networks, through: :network_users
 
   after_commit do
-    UserMailer.notification_email(self).deliver_now
+    #UserMailer.notification_email(self).deliver_now
+  end
+
+  protected
+  def password_required?
+    confirmed? ? super : false
   end
 end

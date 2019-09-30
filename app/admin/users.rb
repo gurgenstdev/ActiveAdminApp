@@ -1,8 +1,11 @@
 ActiveAdmin.register User do
-  permit_params :email, :first_name, :last_name, :password, :password_confirmation, :primary_network_id, network_ids: [],
+  permit_params :email, :first_name, :last_name, :password, :password_confirmation, :email_confirmed, :primary_network_id, network_ids: [],
                 network_attributes: [:id, :name]
   csv_importable :columns => [:first_name, :last_name, :email], :import_unique_key => :email
 
+  action_item :activate, only: [:show] do
+    link_to "Resend Confirmation Email", new_user_confirmation_path unless user.email_confirmed
+  end
 
   index do
     selectable_column
@@ -10,6 +13,7 @@ ActiveAdmin.register User do
     column :first_name
     column :last_name
     column :email
+    column "Active", :email_confirmed
     column :primary_network
     column :networks do |user|
       table_for user.networks.order('name ASC') do
@@ -40,8 +44,6 @@ ActiveAdmin.register User do
       input :email
       input :first_name
       input :last_name
-      #input :password
-      #input :password_confirmation
       input :primary_network_id, :as => :select, collection: Network.all.map{|nt| [nt.name, nt.id]}
       f.input :networks, :as => :check_boxes, collection: Network.all.map{|u| [u.name, u.id]}
     end

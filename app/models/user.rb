@@ -30,6 +30,7 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :confirmable
+  after_initialize :set_defaults
 
 
   validates :first_name, presence: :true
@@ -40,12 +41,22 @@ class User < ApplicationRecord
   has_many :network_users, :dependent => :delete_all
   has_many :networks, through: :network_users
 
-  after_commit do
-    #UserMailer.notification_email(self).deliver_now
+  after_update do
+    email_confirmed?
+  end
+
+  def set_defaults
+    self.email_confirmed ||= false
   end
 
   protected
   def password_required?
     confirmed? ? super : false
+  end
+
+  def email_confirmed?
+    if self.password.blank?
+      self.email_confirmed=true
+    end
   end
 end

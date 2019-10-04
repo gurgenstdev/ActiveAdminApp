@@ -1,0 +1,7 @@
+<hr>
+
+<strong><%= link_to "#{@user.primary_network.name}", :controller => "aggregates", :action => :dashboard %></strong>
+<% @network.each do |network| %>
+  <%= link_to "#{network.name}", network_aggregates_path(network.name) %>
+<% end %>
+<h1><%= @user.inspect %></h1>
